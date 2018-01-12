@@ -49,22 +49,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CombatItem.cs" />
-    <Compile Include="EquipIndex.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="ItemInvType.cs" />
-    <Compile Include="ItemModelType.cs" />
-    <Compile Include="ItemSchema.cs" />
-    <Compile Include="ItemSelectModeFlag.cs" />
-    <Compile Include="ItemSubType.cs" />
-    <Compile Include="ItemSwingType.cs" />
-    <Compile Include="ItemType.cs" />
-    <Compile Include="ItemTypeClass.cs" />
-    <Compile Include="ItemUse.cs" />
-    <Compile Include="ItemXML.cs" />
-    <Compile Include="ModItemDataXML.cs" />
-    <Compile Include="ModItemTypeDataXML.cs" />
-    <Compile Include="PluralType.cs" />
+    <Compile Include="Rules\DefaultRule.cs" />
+    <Compile Include="Rules\Rule.cs" />
+    <Compile Include="TotalMiner\CombatItem.cs" />
+    <Compile Include="TotalMiner\EquipIndex.cs" />
+    <Compile Include="OSRS\OSRSItem.cs" />
+    <Compile Include="TotalMiner\ItemInvType.cs" />
+    <Compile Include="TotalMiner\ItemModelType.cs" />
+    <Compile Include="OSRS\OSRSItemSchema.cs" />
+    <Compile Include="TotalMiner\ItemSelectModeFlag.cs" />
+    <Compile Include="OSRS\OSRSItemSlot.cs" />
+    <Compile Include="OSRS\OSRSItemSlotConverter.cs" />
+    <Compile Include="OSRS\OSRSItemStats.cs" />
+    <Compile Include="TotalMiner\ItemSubType.cs" />
+    <Compile Include="TotalMiner\ItemSwingType.cs" />
+    <Compile Include="TotalMiner\ItemType.cs" />
+    <Compile Include="TotalMiner\ItemTypeClass.cs" />
+    <Compile Include="TotalMiner\ItemUse.cs" />
+    <Compile Include="TotalMiner\ItemXML.cs" />
+    <Compile Include="TotalMiner\ModItemDataXML.cs" />
+    <Compile Include="TotalMiner\ModItemTypeDataXML.cs" />
+    <Compile Include="TotalMiner\PluralType.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -72,5 +77,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

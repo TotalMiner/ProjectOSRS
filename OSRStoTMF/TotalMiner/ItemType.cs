@@ -1,27 +1,23 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OSRStoTMF
+namespace OSRStoTMF.TotalMiner
 {
-    public enum ItemInvType : byte
+    public enum ItemType : byte
     {
         None,
-        Natural,
-        Stone,
-        Ore,
-        Flora,
-        Utility,
-        Building,
-        Color,
+        Block,
+        Item,
         Tool,
         Weapon,
         Armor,
+        Power,
         Food,
+        Decor,
         Jewelry,
-        Key,
-        Other
+        zCount
     }
 }

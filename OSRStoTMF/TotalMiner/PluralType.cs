@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OSRStoTMF
+namespace OSRStoTMF.TotalMiner
 {
-    public enum ItemUse : byte
+    public enum PluralType
     {
         None,
-        Block,
-        Item
+        S,
+        ES
     }
 }
