@@ -20,7 +20,7 @@ namespace OSRStoTMF
     {
         private static List<Rule> rules;
         private static string currentPath;
-        private static string scrapedPath;
+        private static string itemsFailedPath;
         private static string itemsPath;
         private static string outPath;
         private static OSRSItemSchema schema;
@@ -30,7 +30,7 @@ namespace OSRStoTMF
         static void Main(string[] args)
         {
             currentPath = AppDomain.CurrentDomain.BaseDirectory;
-            scrapedPath = Path.Combine(currentPath, "scraped");
+            itemsFailedPath = Path.Combine(currentPath, "items_failed");
             itemsPath = Path.Combine(currentPath, "items");
             outPath = Path.Combine(currentPath, "out");
             schema = JsonConvert.DeserializeObject<OSRSItemSchema>(File.ReadAllText(Path.Combine(currentPath, "items.json")));
@@ -39,6 +39,10 @@ namespace OSRStoTMF
 
             rules = new List<Rule>();
             rules.Add(new DefaultRule());
+
+            CheckDirectoryExists(itemsFailedPath);
+            CheckDirectoryExists(itemsPath);
+            CheckDirectoryExists(outPath);
 
             int i = 1;
             if (!imageCached)
@@ -212,7 +216,7 @@ namespace OSRStoTMF
 
         static string Get404ItemPath(int id)
         {
-            return Path.Combine(scrapedPath, $"{id}.404");
+            return Path.Combine(itemsFailedPath, $"{id}.404");
         }
 
         static string GetItemPathPng(int id)
@@ -264,6 +268,14 @@ namespace OSRStoTMF
             catch (Exception ex)
             {
                 //Log exception here
+            }
+        }
+
+        static void CheckDirectoryExists(string path)
+        {
+            if(!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
             }
         }
     }
