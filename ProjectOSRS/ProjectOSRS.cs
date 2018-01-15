@@ -1,4 +1,5 @@
-﻿using StudioForge.TotalMiner;
+﻿using ProjectOSRS.Sets;
+using StudioForge.TotalMiner;
 using StudioForge.TotalMiner.API;
 using System;
 using System.Collections.Generic;
@@ -9,8 +10,9 @@ namespace ProjectOSRS
 {
     class ProjectOSRS : ITMPlugin
     {
-        private ITMGame _game;
+        private ITMGame game;
         private ItemDictionary itemDictionary;
+        private SetRegistry setRegistry;
 
         public void Draw(ITMPlayer player, ITMPlayer virtualPlayer)
         {
@@ -23,12 +25,15 @@ namespace ProjectOSRS
 
         public void Initialize(ITMPluginManager mgr, string path)
         {
-            itemDictionary = new ItemDictionary(path, (Item)mgr.Offsets.ItemID);
+            this.itemDictionary = new ItemDictionary(path, (Item)mgr.Offsets.ItemID);
+            this.setRegistry = new SetRegistry();
+            setRegistry.Register(new PartyhatSet());
         }
 
         public void InitializeGame(ITMGame game)
         {
-            _game = game;
+            this.game = game;
+            setRegistry.RegisterEvents(game);
         }
 
         public void PlayerJoined(ITMPlayer player)

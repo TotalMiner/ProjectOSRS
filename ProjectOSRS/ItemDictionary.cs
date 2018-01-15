@@ -10,11 +10,13 @@ namespace ProjectOSRS
 {
     class ItemDictionary
     {
+        public static ItemDictionary Instance;
         private Dictionary<string, Item> _dictionary;
 
         public ItemDictionary(string modPath, Item offset)
         {
-            _dictionary = new Dictionary<string, Item>();
+            ItemDictionary.Instance = this;
+            _dictionary = new Dictionary<string, Item>(StringComparer.OrdinalIgnoreCase);
 
             var itemDataPath = Path.Combine(new[] {FileSystem.RootPath, modPath, "ItemData.xml"});
             try
