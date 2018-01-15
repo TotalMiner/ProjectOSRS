@@ -21,10 +21,16 @@ namespace ProjectOSRS
             var itemDataPath = Path.Combine(new[] {FileSystem.RootPath, modPath, "ItemData.xml"});
             try
             {
+                int i = 0;
                 var itemData = Utils.Deserialize1<ModItemDataXML[]>(itemDataPath);
                 foreach (ModItemDataXML item in itemData)
                 {
                     _dictionary.Add(item.ItemID, offset++);
+                    if (i == 0)
+                    {
+                        Logger.Log($"First item is {item.ItemID}, offset returned {Globals1.ItemData[(int)offset].IDString}");
+                    }
+                    i++;
                 }
                 Logger.Log($"Loaded {_dictionary.Keys.Count} items from {itemDataPath}");
             } catch (Exception e)
