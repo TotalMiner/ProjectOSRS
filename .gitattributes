@@ -1,2 +1,5 @@
-ProjectOSRS/Content filter=lfs diff=lfs merge=lfs -text
-ProjectOSRS/Install filter=lfs diff=lfs merge=lfs -text
+ProjectOSRS/Content/*.xml filter=lfs diff=lfs merge=lfs -text
+ProjectOSRS/Content/*.png filter=lfs diff=lfs merge=lfs -text
+ProjectOSRS/Install/*.xml filter=lfs diff=lfs merge=lfs -text
+ProjectOSRS/Install/*.png filter=lfs diff=lfs merge=lfs -text
+ProjectOSRS/Install/*.dll filter=lfs diff=lfs merge=lfs -text
