@@ -34,6 +34,8 @@ namespace OSRStoTMF
             itemsPath = Path.Combine(currentPath, "items");
             outPath = Path.Combine(currentPath, "out");
             schema = JsonConvert.DeserializeObject<OSRSItemSchema>(File.ReadAllText(Path.Combine(currentPath, "items.json")));
+            Console.WriteLine($"{schema.Items["1067"]} -> {Utils.RStoTMSlot(schema.Items["1067"].Slot)}");
+            Console.ReadLine();
             client = new WebClient();
             imageCached = File.Exists(Path.Combine(outPath, "tpi_32.png"));
 
