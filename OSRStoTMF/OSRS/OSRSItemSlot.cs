@@ -8,6 +8,7 @@ namespace OSRStoTMF.OSRS
 {
     public enum OSRSItemSlot
     {
+        None,
         TwoHanded,
         Weapon,
         Shield,

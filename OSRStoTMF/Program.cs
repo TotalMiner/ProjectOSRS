@@ -120,6 +120,16 @@ namespace OSRStoTMF
                 i++;
             }
 
+            var duplicates = modItemList.GroupBy(a => a.ItemID).Where(a => a.Count() > 1);
+            Console.WriteLine($"Duplicate Count: {duplicates.Count()}");
+            if(duplicates.Count() > 0)
+            {
+                foreach(IGrouping<string, ModItemDataXML> item in duplicates)
+                {
+                    Console.WriteLine(item.First().ItemID);
+                }
+                Console.ReadLine();
+            }
             if (!imageCached)
             {
                 int size = (int)Math.Ceiling(Math.Sqrt((double)itemTextures32.Count));
@@ -151,7 +161,14 @@ namespace OSRStoTMF
 
         static void AddItem(OSRSItem osrsItem, List<ModItemDataXML> itemDataList, List<ModItemTypeDataXML> itemTypeDataList, List<ItemXML> texturesList, MagickImageCollection imageCollection)
         {
-            int dupes = itemDataList.Where(e => e.ItemID.StartsWith(NormalizeItemName(osrsItem.Name))).Count();
+            int dupes;
+            if (itemDataList.Exists(e => e.ItemID.Equals(NormalizeItemName(osrsItem.Name), StringComparison.InvariantCultureIgnoreCase)))
+            {
+                dupes = itemDataList.Where(e => e.ItemID.StartsWith(NormalizeItemName(osrsItem.Name) + "_", StringComparison.InvariantCultureIgnoreCase)).Count() + 1;
+            } else
+            {
+                dupes = 0;
+            }
             string itemid;
             if (dupes > 0)
             {

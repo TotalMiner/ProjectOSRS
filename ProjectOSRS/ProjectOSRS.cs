@@ -34,6 +34,15 @@ namespace ProjectOSRS
         {
             this.game = game;
             setRegistry.RegisterEvents(game);
+            game.AddConsoleCommand((cmd, g, player, player2, output) =>
+            {
+                string[] args = cmd.Split(' ');
+                Item item = itemDictionary.Get(args[1]);
+                string idstring = Globals1.ItemData[(int)item].IDString;
+                output.WriteLine($"{item}, {idstring}");
+                output.WriteLine($"[{idstring.Equals(args[1], StringComparison.InvariantCultureIgnoreCase)}] {args[1]} == {idstring}");
+            }, "regtest", "", "");
+            Logger.Log($"First item id from Globals1 is {Globals1.ItemData[(int)ItemDictionary._firstItem].IDString}");
         }
 
         public void PlayerJoined(ITMPlayer player)

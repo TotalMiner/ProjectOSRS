@@ -59,7 +59,7 @@ namespace OSRStoTMF.Rules
             modItemTypeData.Combat = CombatItem.None;
             modItemTypeData.Model = ItemModelType.MediumItem;
             modItemTypeData.Swing = ItemSwingType.Item;
-            modItemTypeData.Equip = EquipIndex.LeftHand;
+            modItemTypeData.Equip = Utils.RStoTMSlot(osrsItem.Slot);
 
             return modItemTypeData;
         }

@@ -33,7 +33,12 @@ namespace OSRStoTMF.OSRS
                 case "2h":
                     return OSRSItemSlot.TwoHanded;
                 default:
-                    return Enum.Parse(typeof(OSRSItemSlot), enumString, true);
+                    if (Enum.TryParse(enumString, true, out OSRSItemSlot slot)) {
+                        return slot;
+                    } else
+                    {
+                        return OSRSItemSlot.None;
+                    }
             }
         }
 

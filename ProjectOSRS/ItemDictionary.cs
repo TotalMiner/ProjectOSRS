@@ -11,6 +11,7 @@ namespace ProjectOSRS
     class ItemDictionary
     {
         public static ItemDictionary Instance;
+        public static Item _firstItem;
         private Dictionary<string, Item> _dictionary;
 
         public ItemDictionary(string modPath, Item offset)
@@ -25,12 +26,16 @@ namespace ProjectOSRS
                 var itemData = Utils.Deserialize1<ModItemDataXML[]>(itemDataPath);
                 foreach (ModItemDataXML item in itemData)
                 {
-                    _dictionary.Add(item.ItemID, offset++);
-                    if (i == 0)
+                    if (!Enum.TryParse<Item>(item.ItemID, out Item im))
                     {
-                        Logger.Log($"First item is {item.ItemID}, offset returned {Globals1.ItemData[(int)offset].IDString}");
+                        _dictionary.Add(item.ItemID, offset++);
+                        if (i == 0)
+                        {
+                            Logger.Log($"First item is {item.ItemID}");
+                            _firstItem = _dictionary[item.ItemID];
+                        }
+                        i++;
                     }
-                    i++;
                 }
                 Logger.Log($"Loaded {_dictionary.Keys.Count} items from {itemDataPath}");
             } catch (Exception e)
