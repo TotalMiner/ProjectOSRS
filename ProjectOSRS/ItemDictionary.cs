@@ -29,12 +29,6 @@ namespace ProjectOSRS
                     if (!Enum.TryParse<Item>(item.ItemID, out Item im))
                     {
                         _dictionary.Add(item.ItemID, offset++);
-                        if (i == 0)
-                        {
-                            Logger.Log($"First item is {item.ItemID}");
-                            _firstItem = _dictionary[item.ItemID];
-                        }
-                        i++;
                     }
                 }
                 Logger.Log($"Loaded {_dictionary.Keys.Count} items from {itemDataPath}");
