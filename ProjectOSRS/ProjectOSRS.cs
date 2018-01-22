@@ -25,12 +25,47 @@ namespace ProjectOSRS
 
         public void Initialize(ITMPluginManager mgr, string path)
         {
+            try
+            {
+                _Initialize(mgr, path);
+            } catch (Exception e)
+            {
+                Logger.LogErr($"Failed to Initialize\n{e}");
+                throw new Exception("Failed to Initialize");
+            }
+        }
+
+        private void _Initialize(ITMPluginManager mgr, string path)
+        {
             this.itemDictionary = new ItemDictionary(path, (Item)mgr.Offsets.ItemID);
             this.setRegistry = new SetRegistry();
-            setRegistry.Register(new PartyhatSet());
+            this.setRegistry.Register(new PartyhatSet());
+            this.setRegistry.Register(new HalloweenMaskSet());
+            this.setRegistry.Register(new BronzeLgSet());
+            this.setRegistry.Register(new IronLgSet());
+            this.setRegistry.Register(new SteelLgSet());
+            this.setRegistry.Register(new BlackLgSet());
+            this.setRegistry.Register(new MithrilLgSet());
+            this.setRegistry.Register(new AdamantLgSet());
+            this.setRegistry.Register(new RuneArmourLgSet());
+            this.setRegistry.Register(new DragonArmourLgSet());
+            this.setRegistry.Register(new GildedArmourLgSet());
         }
 
         public void InitializeGame(ITMGame game)
+        {
+            try
+            {
+                _InitializeGame(game);
+            }
+            catch (Exception e)
+            {
+                Logger.LogErr($"Failed to InitializeGame\n{e}");
+                throw new Exception("Failed to InitializeGame");
+            }
+        }
+
+        private void _InitializeGame(ITMGame game)
         {
             this.game = game;
             setRegistry.RegisterEvents(game);
@@ -42,7 +77,6 @@ namespace ProjectOSRS
                 output.WriteLine($"{item}, {idstring}");
                 output.WriteLine($"[{idstring.Equals(args[1], StringComparison.InvariantCultureIgnoreCase)}] {args[1]} == {idstring}");
             }, "regtest", "", "");
-            Logger.Log($"First item id from Globals1 is {Globals1.ItemData[(int)ItemDictionary._firstItem].IDString}");
         }
 
         public void PlayerJoined(ITMPlayer player)

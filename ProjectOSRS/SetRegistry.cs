@@ -15,8 +15,8 @@ namespace ProjectOSRS
 
         public SetRegistry()
         {
-            _setDictionary = new Dictionary<Item, Set>();
             SetRegistry.Instance = this;
+            this._setDictionary = new Dictionary<Item, Set>();
         }
 
         public int Count

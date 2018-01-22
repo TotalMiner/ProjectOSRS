@@ -110,6 +110,16 @@
     <Compile Include="Logger.cs" />
     <Compile Include="ProjectOSRS.cs" />
     <Compile Include="SetRegistry.cs" />
+    <Compile Include="Sets\DragonArmourLgSet.cs" />
+    <Compile Include="Sets\RuneArmourLgSet.cs" />
+    <Compile Include="Sets\AdamantLgSet.cs" />
+    <Compile Include="Sets\MithrilLgSet.cs" />
+    <Compile Include="Sets\BlackLgSet.cs" />
+    <Compile Include="Sets\SteelLgSet.cs" />
+    <Compile Include="Sets\HalloweenMaskSet.cs" />
+    <Compile Include="Sets\GildedArmourLgSet.cs" />
+    <Compile Include="Sets\BronzeLgSet.cs" />
+    <Compile Include="Sets\IronLgSet.cs" />
     <Compile Include="Sets\PartyhatSet.cs" />
     <Compile Include="Sets\Set.cs" />
     <Compile Include="TMPluginProvider.cs" />
