@@ -18,6 +18,9 @@ namespace OSRStoTMF.OSRS
 
         [JsonProperty("id")]
         public int Id { get; set; }
+        
+        [JsonProperty("noted")]
+        public int NotedId { get; set; }
 
         [JsonProperty("high_alch")]
         public int HighAlch { get; set; }
@@ -45,6 +48,9 @@ namespace OSRStoTMF.OSRS
 
         [JsonProperty("members")]
         public bool Members { get; set; }
+
+        [JsonProperty("has_noted")]
+        public bool HasNoted { get; set; }
 
         [JsonProperty("slot")]
         [JsonConverter(typeof(OSRSItemSlotConverter))]

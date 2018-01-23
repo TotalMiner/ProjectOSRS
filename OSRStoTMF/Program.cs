@@ -22,6 +22,7 @@ namespace OSRStoTMF
         private static string currentPath;
         private static string itemsFailedPath;
         private static string itemsPath;
+        private static string gifitemsPath;
         private static string outPath;
         private static OSRSItemSchema schema;
         private static WebClient client;
@@ -32,6 +33,7 @@ namespace OSRStoTMF
             currentPath = AppDomain.CurrentDomain.BaseDirectory;
             itemsFailedPath = Path.Combine(currentPath, "items_failed");
             itemsPath = Path.Combine(currentPath, "items");
+            gifitemsPath = Path.Combine(currentPath, "gifitems");
             outPath = Path.Combine(currentPath, "out");
             schema = JsonConvert.DeserializeObject<OSRSItemSchema>(File.ReadAllText(Path.Combine(currentPath, "items.json")));
             client = new WebClient();
@@ -54,19 +56,17 @@ namespace OSRStoTMF
                     {
                         if (!File.Exists(GetItemPathPng(item.Id)) && !File.Exists(Get404ItemPath(item.Id)))
                         {
-                            client.DownloadFile($"http://cdn.rsbuddy.com/items/{item.Id}.png", GetItemPathPng(item.Id));
-                            //client.DownloadFile($"http://services.runescape.com/m=itemdb_oldschool/1513605640124_obj_sprite.gif?id={item.Id}", GetItemPathGif(item.Id));
+                            DownloadItem(item.Id);
                             downloaded = true;
                         }
-                        if (HasNoted(item.Id, schema) && !File.Exists(GetNotedItemPath(item.Id)) && !File.Exists(Get404ItemPath(item.Id + 1)))
+                        if (item.HasNoted && item.NotedId > 0 && !File.Exists(GetItemPathPng(item.NotedId)) && !File.Exists(Get404ItemPath(item.NotedId)))
                         {
-                            client.DownloadFile($"http://cdn.rsbuddy.com/items/{item.Id + 1}.png", GetItemPathPng(item.Id + 1));
+                            DownloadItem(item.NotedId);
                         }
                     }
                     catch (WebException e)
                     {
-                        int offset = File.Exists(GetItemPathPng(item.Id)) ? 1 : 0;
-                        int id = item.Id + offset;
+                        int id = File.Exists(GetItemPathPng(item.Id)) ? item.NotedId : item.Id;
                         Console.WriteLine(Get404ItemPath(id));
                         Console.WriteLine(File.Exists(Get404ItemPath(id)));
                         Console.WriteLine($"Error downloading {id} ({i}/{schema.Items.Values.Count})");
@@ -105,13 +105,13 @@ namespace OSRStoTMF
                 if(File.Exists(GetItemPathPng(item.Id)))
                 {
                     AddItem(item, modItemList, modItemTypeList, itemTextures32, magickImageCollection);
-                    if(HasNoted(item.Id, schema) && File.Exists(GetNotedItemPath(item.Id)))
+                    if(item.HasNoted && item.NotedId > 0 && File.Exists(GetItemPathPng(item.NotedId)))
                     {
                         AddItem(new OSRSItem
                         {
                             Name = $"{item.Name} (noted)",
-                            Id = item.Id + 1,
-                            Description = item.Description,
+                            Id = item.NotedId,
+                            Description = "Swap this note at any bank for the equivalent item.",
                             CanStack = true
                         }, modItemList, modItemTypeList, itemTextures32, magickImageCollection);
                     }
@@ -157,6 +157,21 @@ namespace OSRStoTMF
             Console.WriteLine($"modItemTypeList: {modItemTypeList.Count}");
 
             Console.ReadLine();
+        }
+
+        static void DownloadItem(int id)
+        {
+            try
+            {
+                client.DownloadFile($"https://assets.hexagondev.net/osrs/sprites/items/{id}", GetItemPathPng(id));
+            } catch (WebException)
+            {
+                client.DownloadFile($"http://cdn.rsbuddy.com/items/{id}.png", GetItemPathGif(id));
+                var img = new MagickImage(GetItemPathGif(id));
+                img.Format = MagickFormat.Png;
+                img.Write(GetItemPathPng(id));
+                img.Dispose();
+            }
         }
 
         static void AddItem(OSRSItem osrsItem, List<ModItemDataXML> itemDataList, List<ModItemTypeDataXML> itemTypeDataList, List<ItemXML> texturesList, MagickImageCollection imageCollection)
@@ -241,20 +256,9 @@ namespace OSRStoTMF
             return Path.Combine(itemsPath, $"{id}.png");
         }
 
-        static string GetNotedItemPath(int id)
+        static string GetItemPathGif(int id)
         {
-            return Path.Combine(itemsPath, $"{id + 1}.png");
-        }
-
-        static bool HasNoted(int id, OSRSItemSchema schema)
-        {
-            if (schema.Items.TryGetValue(id.ToString(), out OSRSItem item))
-            {
-                return !schema.Items.ContainsKey((item.Id + 1).ToString()) && !item.CanStack;
-            } else
-            {
-                return false;
-            }
+            return Path.Combine(gifitemsPath, $"{id}.gif");
         }
 
         static void Touch(string fileName)
