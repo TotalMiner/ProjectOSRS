@@ -24,7 +24,8 @@ namespace ProjectOSRS
                 var itemData = Utils.Deserialize1<ModItemDataXML[]>(itemDataPath);
                 foreach (ModItemDataXML item in itemData)
                 {
-                    if (!Enum.TryParse<Item>(item.ItemID, out Item im))
+                    Item im;
+                    if (!Enum.TryParse<Item>(item.ItemID, out im))
                     {
                         _dictionary.Add(item.ItemID, offset++);
                     }
@@ -38,7 +39,8 @@ namespace ProjectOSRS
 
         public Item Get(string itemID)
         {
-            if (_dictionary.TryGetValue(itemID, out Item item)) {
+            Item item;
+            if (_dictionary.TryGetValue(itemID, out item)) {
                 return item;
             } else
             {

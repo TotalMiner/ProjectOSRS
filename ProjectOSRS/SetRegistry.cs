@@ -50,7 +50,8 @@ namespace ProjectOSRS
 
         public Set Get(Item item)
         {
-            if(_setDictionary.TryGetValue(item, out Set set))
+            Set set;
+            if(_setDictionary.TryGetValue(item, out set))
             {
                 return set;
             } else

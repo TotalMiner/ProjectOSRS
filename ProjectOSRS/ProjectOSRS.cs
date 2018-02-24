@@ -18,6 +18,11 @@ namespace ProjectOSRS
         {
         }
 
+        public void UnloadMod()
+        {
+            
+        }
+
         public bool HandleInput(ITMPlayer player)
         {
             return false;
