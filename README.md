@@ -1,5 +1,5 @@
 # ProjectOSRS
-A project to port all or most of OSRS items to a Total Miner: Forge mod.
+A project to port all or most of OSRS items to a Total Miner mod.
 
 ## Releases
 This project isn't currently ready for release, but will be in the coming weeks. Stay tuned.
